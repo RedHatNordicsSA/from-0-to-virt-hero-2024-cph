@@ -27,4 +27,5 @@ spec:
 ```shell
 virtctl image-upload dv web-assets --size=50Mi --image-path=data_disk.qcow2
 ```
+(If running from macOS, you will likely need to approve the virtctl binary `xattr -dr com.apple.quarantine`)
 
