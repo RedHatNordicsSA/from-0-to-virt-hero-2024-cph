@@ -21,5 +21,10 @@ spec:
 
 1. Create Namespace
 
-2. In the Console, under Storage, choose PersistentVolumeClaims. On the drop down menu for PersistentVolumeClaim, choose `With Data upload form`. Select the .qcow2 file. Choose a StorageClass that supports FileSystem mode with RWX access such as CephFS or NFS.
+2. Create the DataVolume resource from this repo.
+
+3. Use the following command to upload your qcow2 file to the DataVolume
+```shell
+virtctl image-upload dv web-assets --size=50Mi --image-path=data_disk.qcow2
+```
 
