@@ -6,14 +6,13 @@ Artifacts for the 2024 Summit Connect CPH Virt demo
 
 ### Requirement
 - StorageClass supporting FileSystem mode and RWX.
-- StorageProfile with matching features, it should contain:
+- If checking the box further down to use opimized settings, ensure your StorageProfile has matching features, it should contain:
 ```yaml
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: StorageProfile
 spec:
   claimPropertySets:
     - accessModes:
-        - ReadWriteOnce
         - ReadWriteMany
       volumeMode: Filesystem
 ```
