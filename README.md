@@ -28,7 +28,7 @@ spec:
 
 2. Switch to the create Namespace.
 
-3. Create the following DataVolume in your Namespace
+3. Create the following [archive DataVolume](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/datavolumes.md#content-type) in your Namespace
 ```yaml
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume

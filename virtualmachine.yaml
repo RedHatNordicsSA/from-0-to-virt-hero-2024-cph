@@ -1,0 +1,14 @@
+---
+#TODO
+#Create cloud-init config with
+#RHSM enabled
+#install nginx
+#mkdir /mnt/data
+#Give wider permission on /mnt/data
+#Give Nginx SELinux permission on port 8080 and /mnt/data
+#semanage port -a -t http_port_t -p tcp 
+#semanage fcontext -a -t httpd_sys_content_t '/mnt/data(/.*)?'# restorecon -Rv /mnt/data
+#allow port 8080 in firewalld
+#systemctl enable nginx
+
+#Create RHEL based VM
