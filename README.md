@@ -26,7 +26,7 @@ spec:
 
 1. Create a Namespace, say `webserver`
 
-2. Switch to the create Namespace.
+2. Switch to the newly created Namespace.
 
 3. Create the following [archive DataVolume](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/datavolumes.md#content-type) in your Namespace
 ```yaml
@@ -47,6 +47,7 @@ spec:
       requests:
         storage: 50Mi
 ```
+The data importer can be picky in how it uses [tar](https://github.com/kubevirt/containerized-data-importer/blob/7b330eb75575bfcf06644e0b274547de0f9c125e/pkg/util/util.go#L114)
 
 X. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
 
