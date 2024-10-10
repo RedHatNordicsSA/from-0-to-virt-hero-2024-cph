@@ -6,7 +6,6 @@ metadata:
     cdi.kubevirt.io/storage.bind.immediate.requested: 'true'
     cdi.kubevirt.io/storage.usePopulator: 'true'
   name: web-assets
-  namespace: nginx
 spec:
   pvc:
     accessModes:
