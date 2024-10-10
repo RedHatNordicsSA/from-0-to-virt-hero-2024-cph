@@ -32,6 +32,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: 
+            - nginx
+          args:
+            - "-g"
+            - "daemon off;"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
