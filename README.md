@@ -27,6 +27,9 @@ spec:
 1. Create a Namespace, say `webserver`
 
 2. Switch to the newly created Namespace.
+```shell
+oc project webserver
+```
 
 3. Create Nginx configuration ConfigMap
 ```shell

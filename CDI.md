@@ -1,3 +1,18 @@
+# Requirement
+- StorageClass supporting FileSystem mode and RWX such as CephFS or NFS.
+- To ensure that the CDI uses the most appropriate settings for that StorageClass, ensure your StorageProfile has matching features, it should contain:
+```yaml
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+spec:
+  claimPropertySets:
+    - accessModes:
+        - ReadWriteMany
+      volumeMode: Filesystem
+```
+- Modify the HyperConverged CR named `kubevirt-hyperconverged` in the `openshift-cnv` Namespace to specify a `spec.scratchSpaceStorageClass` value with the StorageClass choosen in the previous steps.
+
+# Import
 Create the following [archive DataVolume](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/datavolumes.md#content-type) in your Namespace
 ```yaml
 apiVersion: cdi.kubevirt.io/v1beta1
