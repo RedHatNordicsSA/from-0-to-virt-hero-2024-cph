@@ -6,12 +6,17 @@ metadata:
   annotations:
     haproxy.router.openshift.io/balance: roundrobin
 spec:
-  host: ab-example.my-project.my-domain
+  host: nginx.<HERE>
+  tls: 
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: http
   to:
     kind: Service
-    name: nginx-pod
-    weight: 10
+    name: nginx-vm
+    weight: 100
   alternateBackends:
   - kind: Service
-    name: nginx-vm
-    weight: 15
+    name: nginx-pod
+    weight: 100
