@@ -28,47 +28,32 @@ spec:
 
 2. Switch to the newly created Namespace.
 
-3. Create the following [archive DataVolume](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/datavolumes.md#content-type) in your Namespace
-```yaml
-apiVersion: cdi.kubevirt.io/v1beta1
-kind: DataVolume
-metadata:
-  name: assets
-spec:
-  source:
-      http:
-         url: "https://github.com/RedHatNordicsSA/from-0-to-virt-hero-2024-assets/raw/refs/heads/main/pdf.tar"
-  contentType: archive
-  pvc:
-    accessModes:
-      - ReadWriteMany
-    storageClassName: managed-nfs-storage
-    resources:
-      requests:
-        storage: 50Mi
-```
-The data importer can be picky in how it uses [tar](https://github.com/kubevirt/containerized-data-importer/blob/7b330eb75575bfcf06644e0b274547de0f9c125e/pkg/util/util.go#L114)
-
-4. Create Nginx configuration ConfigMap
+3. Create Nginx configuration ConfigMap
 ```shell
 oc create -f configmap-nginx-conf.yaml
 ```
 
-5. Create NGINX Deployment
-
-6. Create Secret for VM cloud-init
+4. Create data assets from Secret
 ```shell
-oc create -f secret-nginx-vm-cloudinit.yaml
+oc create -f secret-pdf-files.yaml
+```
+
+5. Create NGINX Deployment and Services from Helm
+```shell
+helm template nginx | oc create -f - 
+```
+
+6. Grant privileges to import template data volume
+```shell
+oc create -f clusterrole-dv-clone.yaml
+oc create -f rolebinding-dv-clone.yaml
 ```
 
 7. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
+Name it `nginx-vm`.
+Use cloud-init script from `secret-nginx-vm-cloudinit.yaml`, the device UID for the ConfigMap (NGINC conf) and Secret (PDF files) must match between the volumes mounted in the VM and the mount command passed to cloud-init
 
-8. Create Services
-```shell
-oc create -f services.yaml
-```
-
-9. Create Route
+8. Create Route
 Get default Ingress domain
 ```shell
 oc get ingresses.config/cluster -o jsonpath={.spec.domain}
