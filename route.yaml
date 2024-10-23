@@ -6,12 +6,12 @@ metadata:
   annotations:
     haproxy.router.openshift.io/balance: roundrobin
 spec:
-  host: nginx.<HERE>
+  host: nginx.<DOMAIN>
   tls: 
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
   port:
-    targetPort: http
+    targetPort: 8080
   to:
     kind: Service
     name: nginx-vm
