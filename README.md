@@ -63,4 +63,10 @@ Edit `route.yaml` to use this domain in `spec.host` then
 oc create -f route.yaml
 ```
 
+9. Generate some traffic
+```shell
+export APP_URL=$(oc get route -o jsonpath='{.items[0].spec.host}')
+for n in {1..100}; do curl -I https://$APP_URL; done
+```
+
 
