@@ -64,8 +64,8 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes: 
   - name: assets
-    persistentVolumeClaim:
-      claimName: assets
+    secret:
+      secretName: pdf-files
   - name: config
     configMap:
       name: nginx-conf
