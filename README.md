@@ -49,6 +49,28 @@ spec:
 ```
 The data importer can be picky in how it uses [tar](https://github.com/kubevirt/containerized-data-importer/blob/7b330eb75575bfcf06644e0b274547de0f9c125e/pkg/util/util.go#L114)
 
-X. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
+4. Create Nginx configuration ConfigMap
+```shell
+oc create -f configmap-nginx-conf.yaml
+```
+
+5. Create NGINX Deployment
+
+6. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
+
+7. Create Services
+```shell
+oc create -f services.yaml
+```
+
+8. Create Route
+Get default Ingress domain
+```shell
+oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+```
+Edit `route.yaml` to use this domain in `spec.host` then
+```shell
+oc create -f route.yaml
+```
 
 
