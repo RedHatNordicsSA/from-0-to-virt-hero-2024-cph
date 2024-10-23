@@ -56,14 +56,19 @@ oc create -f configmap-nginx-conf.yaml
 
 5. Create NGINX Deployment
 
-6. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
+6. Create Secret for VM cloud-init
+```shell
+oc create -f secret-nginx-vm-cloudinit.yaml
+```
 
-7. Create Services
+7. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
+
+8. Create Services
 ```shell
 oc create -f services.yaml
 ```
 
-8. Create Route
+9. Create Route
 Get default Ingress domain
 ```shell
 oc get ingresses.config/cluster -o jsonpath={.spec.domain}
