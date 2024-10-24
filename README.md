@@ -23,6 +23,7 @@ oc project webserver
 ```shell
 helm template nginx | oc create -f - 
 ```
+At this point you should have a working Nginx Pod capable of serving the static files but only accessible via a Service, the Route will be created later.
 
 4. Grant privileges to import template data volume
 ```shell
