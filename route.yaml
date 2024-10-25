@@ -6,6 +6,12 @@ metadata:
   annotations:
     haproxy.router.openshift.io/balance: roundrobin
     haproxy.router.openshift.io/disable_cookies: 'true'
+  labels:
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: nginx-0.1.0
 spec:
   host: nginx.<DOMAIN>
   tls: 

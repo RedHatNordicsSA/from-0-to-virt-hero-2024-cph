@@ -13,8 +13,11 @@ Artifacts for the 2024 Summit Connect CPH Virt demo
 ### Steps
 
 1. Create a Namespace, say `webserver`
+```shell
+oc new-project webserver
+```
 
-2. Switch to the newly created Namespace.
+2. Switch to the newly created Namespace (if not already switched to it).
 ```shell
 oc project webserver
 ```
