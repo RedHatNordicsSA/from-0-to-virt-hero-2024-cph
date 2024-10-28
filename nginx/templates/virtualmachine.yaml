@@ -1,0 +1,96 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: nginx-vm
+    flavor.template.kubevirt.io/medium: 'true'
+    os.template.kubevirt.io/rhel9.0: 'true'
+    os.template.kubevirt.io/rhel9.1: 'true'
+    os.template.kubevirt.io/rhel9.2: 'true'
+    os.template.kubevirt.io/rhel9.3: 'true'
+    os.template.kubevirt.io/rhel9.4: 'true'
+    os.template.kubevirt.io/rhel9.5: 'true'
+    vm.kubevirt.io/template: virt-corp-rhel9-server-medium
+    vm.kubevirt.io/template.namespace: openshift
+    workload.template.kubevirt.io/server: 'true'
+  name: nginx-vm
+  namespace: webserver
+  uid: e0088db3-c575-40f0-9916-850a190fedf8
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: rootdisk
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: virt-corp-rhel9
+          namespace: openshift-virtualization-os-images
+        storage:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 40Gi
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: nginx-vm
+    spec:
+      architecture: amd64
+      domain:
+        cpu:
+          cores: 2
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: rootdisk
+            - disk:
+                bus: virtio
+              name: cloudinitdisk
+            - disk: {}
+              name: environment-disk-x117cr
+              serial: CKCQKP
+            - disk: {}
+              name: environment-disk-iqigob
+              serial: YLPKDF
+          interfaces:
+            - macAddress: '02:62:d0:00:00:08'
+              masquerade: {}
+              name: default
+          rng: {}
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: q35
+        memory:
+          guest: 4Gi
+        resources:
+          requests:
+            memory: 4Gi
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - dataVolume:
+            name: rootdisk
+          name: rootdisk
+        - cloudInitNoCloud:
+            secretRef:
+              name: nginx-vm-cloudinit
+          name: cloudinitdisk
+        - name: environment-disk-x117cr
+          secret:
+            secretName: pdf-files
+        - configMap:
+            name: nginx-conf
+          name: environment-disk-iqigob

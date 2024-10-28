@@ -16,29 +16,25 @@ Artifacts for the 2024 Summit Connect CPH Virt demo
 ```shell
 oc new-project webserver
 ```
-
-2. Switch to the newly created Namespace (if not already switched to it).
+Switch to the newly created Namespace (if not already switched to it).
 ```shell
 oc project webserver
+```
+
+2. Grant privileges to import template data volume
+```shell
+oc create -f clusterrole-dv-clone.yaml
+oc create -f rolebinding-dv-clone.yaml
 ```
 
 3. Create NGINX Deployment, ConfigMap, Secret and Services from Helm
 ```shell
 helm template nginx | oc create -f - 
 ```
-At this point you should have a working Nginx Pod capable of serving the static files but only accessible via a Service, the Route will be created later.
+At this point you should have a working Nginx Pod and VM capable of serving the static files but only accessible via a Service, the Route will be created later.
+A randomly generated password for the VM was created and can be found in the `nginx-vm-cloudinit` Secret.
 
-4. Grant privileges to import template data volume
-```shell
-oc create -f clusterrole-dv-clone.yaml
-oc create -f rolebinding-dv-clone.yaml
-```
-
-5. Create VirtualMachineInstance with [ConfigMap mounted as a disk](https://kubevirt.io/user-guide/storage/disks_and_volumes/#as-a-disk)
-Name it `nginx-vm`.
-Use cloud-init script from `secret-nginx-vm-cloudinit.yaml`, the device UID for the ConfigMap (NGINC conf) and Secret (PDF files) must match between the volumes mounted in the VM and the mount command passed to cloud-init
-
-6. Create Route
+4. Create Route
 Get default Ingress domain
 ```shell
 oc get ingresses.config/cluster -o jsonpath={.spec.domain}
@@ -48,7 +44,7 @@ Edit `route.yaml` to use this domain in `spec.host` then
 oc create -f route.yaml
 ```
 
-7. Generate some traffic
+5. Generate some traffic
 ```shell
 export APP_URL=$(oc get route -o jsonpath='{.items[0].spec.host}')
 for n in {1..100}; do curl -I https://$APP_URL; done
