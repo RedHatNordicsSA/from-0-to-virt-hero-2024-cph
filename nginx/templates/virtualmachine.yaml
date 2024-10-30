@@ -1,3 +1,4 @@
+{{- if .Values.vm.enabled }}
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -10,12 +11,10 @@ metadata:
     os.template.kubevirt.io/rhel9.3: 'true'
     os.template.kubevirt.io/rhel9.4: 'true'
     os.template.kubevirt.io/rhel9.5: 'true'
-    vm.kubevirt.io/template: virt-corp-rhel9-server-medium
+    vm.kubevirt.io/template: {{ .Values.vm.source.template }}
     vm.kubevirt.io/template.namespace: openshift
     workload.template.kubevirt.io/server: 'true'
   name: nginx-vm
-  namespace: webserver
-  uid: e0088db3-c575-40f0-9916-850a190fedf8
 spec:
   dataVolumeTemplates:
     - metadata:
@@ -24,8 +23,8 @@ spec:
       spec:
         sourceRef:
           kind: DataSource
-          name: virt-corp-rhel9
-          namespace: openshift-virtualization-os-images
+          name: {{ .Values.vm.source.name }}
+          namespace: {{ .Values.vm.source.namespace }}
         storage:
           accessModes:
             - ReadWriteMany
@@ -94,3 +93,4 @@ spec:
         - configMap:
             name: nginx-conf
           name: environment-disk-iqigob
+{{- end }}

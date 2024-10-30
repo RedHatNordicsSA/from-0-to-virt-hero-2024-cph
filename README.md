@@ -27,7 +27,8 @@ oc create -f clusterrole-dv-clone.yaml
 oc create -f rolebinding-dv-clone.yaml
 ```
 
-3. Create NGINX Deployment, ConfigMap, Secret and Services from Helm
+3. Create resoure to run NGINX as a Pod and VM from Helm
+You can specify the VM DataSource and template via Values under `.vm`.
 ```shell
 helm template nginx | oc create -f - 
 ```

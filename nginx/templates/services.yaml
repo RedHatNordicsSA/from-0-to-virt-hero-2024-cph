@@ -13,6 +13,7 @@ spec:
       port: 8080
       targetPort: 8080
 
+{{- if .Values.vm.enabled }}
 ---
 apiVersion: v1
 kind: Service
@@ -26,3 +27,4 @@ spec:
       protocol: TCP
       port: 8080
       targetPort: 8080
+{{- end }}

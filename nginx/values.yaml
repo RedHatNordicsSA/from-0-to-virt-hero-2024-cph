@@ -5,6 +5,13 @@ image:
   pullPolicy: IfNotPresent
   tag: "1-25.1726663417"
 
+vm:
+  enabled: true
+  source:
+    name: virt-corp-rhel9
+    namespace: openshift-virtualization-os-images
+  template: virt-corp-rhel9-server-medium
+
 nameOverride: ""
 fullnameOverride: ""
 
