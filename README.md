@@ -22,6 +22,7 @@ oc project webserver
 ```
 
 2. Grant privileges to import template data volume
+You'll likely need to modify the Namespace value in the `RoleBinding`.
 ```shell
 oc create -f clusterrole-dv-clone.yaml
 oc create -f rolebinding-dv-clone.yaml
