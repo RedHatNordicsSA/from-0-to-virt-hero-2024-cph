@@ -33,6 +33,7 @@ You can specify the VM DataSource and template via Values under `.vm`.
 ```shell
 helm template nginx | oc create -f - 
 ```
+You might need to create the Secret containing PDF files manually if Helm packaging/release process is used and respects `.helmignore` which exceludes that Secret for size concerns.
 At this point you should have a working Nginx Pod and VM capable of serving the static files but only accessible via a Service, the Route will be created later.
 A randomly generated password for the VM was created and can be found in the `nginx-vm-cloudinit` Secret.
 
